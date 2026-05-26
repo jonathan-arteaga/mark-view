@@ -5,7 +5,7 @@
 <h1 align="center">QuillLook</h1>
 
 <p align="center">
-  A clean, local Quick Look previewer for Markdown on macOS.
+  <strong>Preview Markdown in Finder with Space.</strong>
 </p>
 
 <p align="center">
@@ -16,21 +16,29 @@
   <img alt="Notarized Developer ID" src="https://img.shields.io/badge/Developer%20ID-notarized-2ea043">
 </p>
 
-QuillLook lets Finder preview Markdown files with the Space bar. It is intentionally small: install the app once, enable the Quick Look extension if macOS asks, then preview `.md`, `.markdown`, `.mdown`, `.mkd`, `.mkdn`, and `.mdx` files without opening an editor.
+<p align="center">
+  <a href="https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg"><strong>Download QuillLook 0.1.0 for macOS</strong></a>
+</p>
 
-## Download
+QuillLook is a small macOS Quick Look extension that turns Markdown files into readable Finder previews. No editor, no web app, no network request: select a Markdown file, press Space, and read it where you already are.
 
-[Download QuillLook 0.1.0 for macOS](https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg)
+- Read Markdown without opening a full editor.
+- Preview docs, notes, READMEs, and MDX files while browsing Finder.
+- Keep richer Markdown useful with tables, task lists, code highlighting, Mermaid diagrams, and KaTeX math.
 
-The DMG is signed with Developer ID, notarized by Apple, and stapled for public distribution.
+## What It Does
 
-## Install
+QuillLook adds a polished Markdown preview to Finder. It works with common Markdown extensions, renders everything locally, and keeps a lightweight Preview/Source toggle for moments when you want to inspect the original text.
 
-1. Download the latest `QuillLook-0.1.0-macOS.dmg`.
-2. Open the DMG and drag `QuillLook.app` into Applications.
-3. Open QuillLook once.
-4. If macOS prompts you, enable the Quick Look extension in System Settings.
-5. Select a Markdown file in Finder and press Space.
+## Why It Helps
+
+Finder is great for moving through folders, but Markdown files are usually hard to scan there. QuillLook makes Markdown feel like a first-class Mac document: quick to open, easy to read, and useful for checking project docs, personal notes, generated reports, or README files without breaking your flow.
+
+## Screenshots
+
+![QuillLook rendering Markdown in a Quick Look preview](docs/assets/quilllook-preview.png)
+
+QuillLook renders common Markdown features directly inside Quick Look, including task lists, highlighted code, tables, Mermaid diagrams, and math.
 
 ## Features
 
@@ -44,13 +52,49 @@ The DMG is signed with Developer ID, notarized by Apple, and stapled for public 
 - Preview and source modes.
 - Lightweight asset loading so simple Markdown stays fast.
 
+## Install
+
+1. Download `QuillLook-0.1.0-macOS.dmg`.
+2. Open the DMG and drag `QuillLook.app` into Applications.
+3. Open QuillLook once so macOS discovers the Quick Look extension.
+4. If macOS prompts you, enable the extension in System Settings.
+5. Select a Markdown file in Finder and press Space.
+
+The DMG is signed with Developer ID, notarized by Apple, and stapled for public distribution.
+
 ## Supported Files
 
 `md`, `markdown`, `mdown`, `mkd`, `mkdn`, `mdx`
 
-## Why QuillLook
+## FAQ
 
-Most Markdown previewers either do too little or become a full editor. QuillLook is just the missing Finder preview: readable typography, useful Markdown extras, and a quiet containing app that stays out of the way.
+### Why do I need to open the app once?
+
+macOS discovers Quick Look extensions from installed apps. Opening QuillLook once gives the system a clean chance to register the extension.
+
+### Where does QuillLook show up?
+
+QuillLook appears in Finder Quick Look. Select a supported Markdown file and press Space. The containing app is only there for onboarding, samples, and cleanup help.
+
+### Does it send my files anywhere?
+
+No. Rendering is local and offline. Bundled assets are loaded from the app, and links are blocked from navigating inside the preview.
+
+### Why is a preview stale after editing?
+
+Finder can cache Quick Look previews. Re-selecting the file usually refreshes it; if it stays stale, run:
+
+```bash
+qlmanage -r cache
+```
+
+### How do I remove duplicate Quick Look entries?
+
+If you used local development builds, stale copies can remain registered with macOS. From the repo, run:
+
+```bash
+./script/build_and_run.sh --clean-stale
+```
 
 ## Build From Source
 
@@ -98,14 +142,6 @@ After packaging, publish the DMG to the GitHub release:
 ```
 
 This creates an ad-hoc signed zip for local testing only. Use the DMG flow for public downloads.
-
-## Clean Old Quick Look Registrations
-
-```bash
-./script/build_and_run.sh --clean-stale
-```
-
-This removes stale QuillLook and legacy MarkdownQL build products, unregisters old Quick Look extensions, and refreshes Quick Look caches.
 
 ## Status
 
