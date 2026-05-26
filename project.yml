@@ -11,6 +11,11 @@ settings:
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     ENABLE_DEBUG_DYLIB: NO
     CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
+  configs:
+    Debug:
+      ENABLE_HARDENED_RUNTIME: NO
+    Release:
+      ENABLE_HARDENED_RUNTIME: YES
 targets:
   QuillLookCore:
     type: framework
@@ -21,6 +26,9 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.QuillLookCore
         GENERATE_INFOPLIST_FILE: YES
+      configs:
+        Release:
+          ENABLE_HARDENED_RUNTIME: YES
 
   QuillLookPreviewExtension:
     type: app-extension
@@ -39,6 +47,9 @@ targets:
         CODE_SIGN_ENTITLEMENTS: QuillLookPreviewExtension/QuillLookPreviewExtension.entitlements
         GENERATE_INFOPLIST_FILE: NO
         SKIP_INSTALL: YES
+      configs:
+        Release:
+          ENABLE_HARDENED_RUNTIME: YES
 
   QuillLook:
     type: application
@@ -59,6 +70,9 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
+      configs:
+        Release:
+          ENABLE_HARDENED_RUNTIME: YES
 
   QuillLookTests:
     type: bundle.unit-test

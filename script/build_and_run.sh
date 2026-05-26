@@ -72,6 +72,7 @@ clean_stale_bundles() {
     "$ROOT/build/DerivedData"
     "$BUILD_ROOT/TestDerivedData"
     "$BUILD_ROOT/PackageDerivedData"
+    "$BUILD_ROOT/DmgDerivedData"
     "$HOME/Library/Caches/$LEGACY_APP_NAME"
     "$DERIVED_DATA/Build/Products/Debug/$APP_NAME.app"
     "$DERIVED_DATA/Build/Products/Debug/${APP_NAME}PreviewExtension.appex"

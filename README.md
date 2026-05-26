@@ -12,15 +12,42 @@ It renders Markdown locally with support for code highlighting, Mermaid diagrams
 
 This generates the Xcode project with XcodeGen, builds the app, installs it into `~/Applications`, refreshes Quick Look, and launches the containing app.
 
-## Package
+## Install
+
+Download the latest `QuillLook-0.1.0-macOS.dmg` from the GitHub release, open it, and drag `QuillLook.app` into Applications. Open QuillLook once so macOS can discover the Quick Look extension. If macOS asks, enable the extension in System Settings.
+
+## Public DMG Package
+
+```bash
+./script/package_dmg.sh
+```
+
+The public package is written to `dist/QuillLook-0.1.0-macOS.dmg`.
+
+Public GitHub downloads require a Developer ID Application certificate and Apple notarization credentials. The script auto-detects a `Developer ID Application` identity, or you can set `QUILLLOOK_DEVELOPER_ID`.
+
+Create the default notary profile once with:
+
+```bash
+xcrun notarytool store-credentials quilllook-notary \
+  --apple-id YOUR_APPLE_ID \
+  --team-id YOUR_TEAM_ID \
+  --password YOUR_APP_SPECIFIC_PASSWORD
+```
+
+After the DMG is created, publish it to the GitHub release with:
+
+```bash
+./script/publish_release.sh
+```
+
+## Local Test Package
 
 ```bash
 ./script/package_release.sh
 ```
 
-The packaged app zip is written to `dist/QuillLook-0.1.0-macOS.zip`.
-
-This local package is ad-hoc signed for development/testing. For wider public distribution, sign with a Developer ID certificate and notarize the zip.
+The local test package is written to `dist/QuillLook-0.1.0-macOS.zip` and is ad-hoc signed for development only. Use the DMG flow for public downloads.
 
 ## Clean Old Registrations
 
