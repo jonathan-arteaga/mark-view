@@ -74,15 +74,10 @@ private final class Uninstaller {
         [
             URL(fileURLWithPath: "/Applications/QuillLook.app"),
             home.appendingPathComponent("Applications/QuillLook.app"),
-            URL(fileURLWithPath: "/Applications/MarkdownQL.app"),
-            home.appendingPathComponent("Applications/MarkdownQL.app"),
             home.appendingPathComponent("Library/Application Support/QuillLook"),
             home.appendingPathComponent("Library/Caches/QuillLook"),
-            home.appendingPathComponent("Library/Caches/MarkdownQL"),
             home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.QuillLook.plist"),
-            home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.MarkdownQL.plist"),
-            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.QuillLook.savedState"),
-            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.MarkdownQL.savedState")
+            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.QuillLook.savedState")
         ]
     }
 
@@ -115,7 +110,7 @@ private final class Uninstaller {
 
     private func canRequestPrivilegedRemoval(for url: URL) -> Bool {
         let path = url.standardizedFileURL.path
-        return path == "/Applications/QuillLook.app" || path == "/Applications/MarkdownQL.app"
+        return path == "/Applications/QuillLook.app"
     }
 
     private func removeWithAdministratorPrompt(_ url: URL) -> Bool {
@@ -136,7 +131,7 @@ private final class Uninstaller {
             }
 
             let path = String(trimmed.dropFirst("Path = ".count))
-            if path.contains("QuillLook") || path.contains("MarkdownQL") {
+            if path.contains("QuillLook") {
                 unregister(URL(fileURLWithPath: path))
             }
         }
@@ -145,9 +140,7 @@ private final class Uninstaller {
     private func unregisterBundles(under url: URL) {
         let bundleNames: Set<String> = [
             "QuillLook.app",
-            "QuillLookPreviewExtension.appex",
-            "MarkdownQL.app",
-            "MarkdownQLPreviewExtension.appex"
+            "QuillLookPreviewExtension.appex"
         ]
 
         if bundleNames.contains(url.lastPathComponent) {

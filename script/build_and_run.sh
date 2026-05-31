@@ -2,15 +2,14 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUILD_ROOT="${QUILLLOOK_BUILD_ROOT:-${MARKDOWNQL_BUILD_ROOT:-$HOME/Library/Caches/QuillLook}}"
+BUILD_ROOT="${QUILLLOOK_BUILD_ROOT:-$HOME/Library/Caches/QuillLook}"
 DERIVED_DATA="$BUILD_ROOT/DerivedData"
-CONFIGURATION="${QUILLLOOK_CONFIGURATION:-${MARKDOWNQL_CONFIGURATION:-Release}}"
+CONFIGURATION="${QUILLLOOK_CONFIGURATION:-Release}"
 PROJECT="$ROOT/QuillLook.xcodeproj"
 APP_NAME="QuillLook"
-LEGACY_APP_NAME="MarkdownQL"
 APP_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 EXTENSION_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/${APP_NAME}PreviewExtension.appex"
-DIST_DIR="${QUILLLOOK_DIST_DIR:-${MARKDOWNQL_DIST_DIR:-$HOME/Applications}}"
+DIST_DIR="${QUILLLOOK_DIST_DIR:-$HOME/Applications}"
 LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
 
 VERIFY=false
@@ -57,7 +56,7 @@ remove_stale_path() {
   if [[ -e "$path" ]]; then
     while IFS= read -r -d '' bundle_path; do
       unregister_bundle "$bundle_path"
-    done < <(/usr/bin/find "$path" \( -name "$APP_NAME.app" -o -name "${APP_NAME}PreviewExtension.appex" -o -name "$LEGACY_APP_NAME.app" -o -name "${LEGACY_APP_NAME}PreviewExtension.appex" \) -print0 2>/dev/null || true)
+    done < <(/usr/bin/find "$path" \( -name "$APP_NAME.app" -o -name "${APP_NAME}PreviewExtension.appex" \) -print0 2>/dev/null || true)
     unregister_bundle "$path"
     rm -rf "$path"
     echo "Removed stale QuillLook copy: $path"
@@ -66,14 +65,11 @@ remove_stale_path() {
 
 clean_stale_bundles() {
   local stale_paths=(
-    "$DIST_DIR/$LEGACY_APP_NAME.app"
     "$ROOT/dist/$APP_NAME.app"
-    "$ROOT/dist/$LEGACY_APP_NAME.app"
     "$ROOT/build/DerivedData"
     "$BUILD_ROOT/TestDerivedData"
     "$BUILD_ROOT/PackageDerivedData"
     "$BUILD_ROOT/DmgDerivedData"
-    "$HOME/Library/Caches/$LEGACY_APP_NAME"
     "$DERIVED_DATA/Build/Products/Debug/$APP_NAME.app"
     "$DERIVED_DATA/Build/Products/Debug/${APP_NAME}PreviewExtension.appex"
     "$DERIVED_DATA/Build/Products/Release/$APP_NAME.app"

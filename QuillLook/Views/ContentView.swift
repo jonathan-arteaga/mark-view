@@ -117,18 +117,13 @@ private enum StaleQuillLookCleaner {
         let installedApp = home.appendingPathComponent("Applications/QuillLook.app")
 
         let candidates = [
-            home.appendingPathComponent("Applications/MarkdownQL.app"),
             home.appendingPathComponent("Documents/QuillLook/dist/QuillLook.app"),
-            home.appendingPathComponent("Documents/QuillLook/dist/MarkdownQL.app"),
             home.appendingPathComponent("Documents/QuillLook/build/DerivedData"),
-            home.appendingPathComponent("Documents/MarkdownQL/dist/MarkdownQL.app"),
-            home.appendingPathComponent("Documents/MarkdownQL/build/DerivedData"),
             home.appendingPathComponent("Library/Caches/QuillLook/TestDerivedData"),
             home.appendingPathComponent("Library/Caches/QuillLook/PackageDerivedData"),
             home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Debug"),
             home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Release/QuillLook.app"),
-            home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Release/QuillLookPreviewExtension.appex"),
-            home.appendingPathComponent("Library/Caches/MarkdownQL")
+            home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Release/QuillLookPreviewExtension.appex")
         ]
 
         var removedCount = 0
@@ -169,9 +164,7 @@ private enum StaleQuillLookCleaner {
     private static func unregisterBundles(under url: URL) {
         let bundleNames: Set<String> = [
             "QuillLook.app",
-            "QuillLookPreviewExtension.appex",
-            "MarkdownQL.app",
-            "MarkdownQLPreviewExtension.appex"
+            "QuillLookPreviewExtension.appex"
         ]
         if bundleNames.contains(url.lastPathComponent) {
             unregister(url)
