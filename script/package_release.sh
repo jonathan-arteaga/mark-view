@@ -10,7 +10,7 @@ PROJECT="$ROOT/$APP_NAME.xcodeproj"
 APP_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 DIST_DIR="$ROOT/dist"
 STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-package.XXXXXX")"
-VERSION="${MARKVIEW_VERSION:-0.1.0}"
+VERSION="${MARKVIEW_VERSION:-0.1.1}"
 ZIP_PATH="$DIST_DIR/$APP_NAME-$VERSION-macOS.zip"
 LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
 

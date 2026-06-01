@@ -134,7 +134,7 @@ Create the public signed and notarized DMG:
 The DMG is written to:
 
 ```text
-dist/MarkView-0.1.0-macOS.dmg
+dist/MarkView-0.1.1-macOS.dmg
 ```
 
 Public packaging requires a Developer ID Application certificate and a stored notary profile named `markview-notary`.

@@ -68,7 +68,7 @@ targets:
         INFOPLIST_FILE: MarkView/Info.plist
         CODE_SIGN_ENTITLEMENTS: MarkView/MarkView.entitlements
         GENERATE_INFOPLIST_FILE: NO
-        MARKETING_VERSION: "0.1.0"
+        MARKETING_VERSION: "0.1.1"
         CURRENT_PROJECT_VERSION: "1"
       configs:
         Release:

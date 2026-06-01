@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_NAME="MarkView"
-VERSION="${MARKVIEW_VERSION:-0.1.0}"
+VERSION="${MARKVIEW_VERSION:-0.1.1}"
 TAG="${MARKVIEW_RELEASE_TAG:-v$VERSION}"
 REPO="${MARKVIEW_GITHUB_REPO:-jonathan-arteaga/mark-view}"
 DMG_PATH="$ROOT/dist/$APP_NAME-$VERSION-macOS.dmg"
