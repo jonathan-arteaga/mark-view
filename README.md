@@ -9,38 +9,44 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jonathan-arteaga/quill-look/releases/latest">
-    <img alt="Latest release" src="https://img.shields.io/github/v/release/jonathan-arteaga/quill-look?label=release">
-  </a>
+  <a href="https://github.com/jonathan-arteaga/quill-look/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/jonathan-arteaga/quill-look?label=release&color=111111"></a>
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
-  <img alt="Notarized Developer ID" src="https://img.shields.io/badge/Developer%20ID-notarized-2ea043">
+  <img alt="Built with Swift" src="https://img.shields.io/badge/Swift-111111?logo=swift&logoColor=white">
+  <img alt="Notarized Developer ID" src="https://img.shields.io/badge/Developer%20ID-notarized-111111">
 </p>
 
 <p align="center">
-  <a href="https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg"><strong>Download QuillLook 0.1.0 for macOS</strong></a>
+  <a href="https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg"><strong>Download</strong></a>
+  ·
+  <a href="#features">Features</a>
+  ·
+  <a href="#install">Install</a>
+  ·
+  <a href="#troubleshooting">Troubleshooting</a>
 </p>
 
-QuillLook is a small macOS Quick Look extension for readable Markdown previews in Finder. No editor, no web app, no network request: select a file, press Space, and read.
+![QuillLook rendering Markdown in a Quick Look preview](docs/assets/quilllook-preview.png)
+
+QuillLook is a native macOS Quick Look extension for readable Markdown previews in Finder. No editor, no web app, no network request: select a file, press Space, and read.
+
+## Why QuillLook
 
 - Read Markdown without opening an editor.
 - Preview docs, notes, READMEs, and MDX files from Finder.
 - Keep tables, code, diagrams, math, and images useful at a glance.
 
-## What It Does
+## Features
 
-QuillLook adds clean Markdown previews to Finder. It supports common Markdown extensions, renders locally, and includes a lightweight Preview/Source toggle.
+| | |
+|---|---|
+| **Finder previews** | Preview Markdown directly from Finder with Space. |
+| **Readable rendering** | Supports headings, links, lists, blockquotes, tables, task lists, and inline formatting. |
+| **Developer docs** | Highlights fenced code blocks and keeps README files easy to scan. |
+| **Rich Markdown** | Renders Mermaid diagrams, KaTeX math, and readable local images when present. |
+| **Source access** | Switch to the original Markdown when you need to inspect the text. |
+| **Local by design** | Files stay on your Mac and do not require an account or network request. |
 
-## Why It Helps
-
-Finder is great for moving through folders, but Markdown is hard to scan there. QuillLook makes docs, notes, reports, and README files quick to read without leaving Finder.
-
-## Screenshots
-
-![QuillLook rendering Markdown in a Quick Look preview](docs/assets/quilllook-preview.png)
-
-QuillLook renders task lists, highlighted code, tables, Mermaid diagrams, math, and more inside Quick Look.
-
-## Get Started
+## Install
 
 1. Download [QuillLook 0.1.0 for macOS](https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg).
 2. Open the guided DMG.
@@ -52,17 +58,8 @@ If prompted, allow QuillLook in System Settings. After that, use it directly fro
 
 The DMG is signed with Developer ID, notarized by Apple, and stapled for public distribution.
 
-## What QuillLook Handles
-
-QuillLook is for browsing, not editing: project docs, reports, exported notes, README files, and MDX content.
-
-- **Files:** `md`, `markdown`, `mdown`, `mkd`, `mkdn`, `mdx`
-- **Markdown:** headings, links, lists, blockquotes, tables, task lists, and inline formatting
-- **Code:** fenced blocks with language-aware highlighting
-- **Diagrams:** Mermaid blocks using fenced `mermaid` code
-- **Math:** KaTeX when math delimiters are present
-- **Images:** readable relative local images
-- **Source:** quick access to the original Markdown
+> [!NOTE]
+> QuillLook handles `md`, `markdown`, `mdown`, `mkd`, `mkdn`, and `mdx` files.
 
 ## Privacy
 
@@ -75,6 +72,9 @@ Open the DMG and launch `Uninstall QuillLook.app`.
 The uninstaller confirms first, removes QuillLook, unregisters the extension, clears caches/preferences, and refreshes Quick Look. If needed, macOS may ask for an administrator password. Your Markdown files are not touched.
 
 ## Troubleshooting
+
+<details>
+<summary>QuillLook does not show the preview I expected</summary>
 
 ### QuillLook does not appear in Quick Look
 
@@ -106,7 +106,9 @@ QuillLook is a normal Mac app containing a Quick Look extension. Opening it once
 
 In Finder. Select a supported Markdown file and press Space. The app window is only for onboarding, samples, and cleanup.
 
-## For Developers
+</details>
+
+## Build From Source
 
 <details>
 <summary>Build from source, package the DMG, and publish releases</summary>
@@ -156,4 +158,4 @@ For local testing only, you can also create an ad-hoc signed zip:
 
 ## Status
 
-QuillLook is early but usable. The focus is a fast, minimal Finder preview before preferences, an updater, or App Store polish.
+QuillLook is early but usable. The current focus is a fast, minimal Finder preview before preferences, an updater, or App Store polish.
