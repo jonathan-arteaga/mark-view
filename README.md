@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/jonathan-arteaga/mark-view/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/jonathan-arteaga/mark-view?label=release&color=111111"></a>
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
   <img alt="Built with Swift" src="https://img.shields.io/badge/Swift-111111?logo=swift&logoColor=white">
   <img alt="Quick Look extension" src="https://img.shields.io/badge/Quick%20Look-extension-111111">
@@ -47,7 +48,9 @@ MarkView is a native macOS Quick Look extension for readable Markdown previews i
 
 ## Install
 
-Public MarkView downloads will start with the first MarkView release. For now, build and install locally:
+Download the latest MarkView zip from [Releases](https://github.com/jonathan-arteaga/mark-view/releases/latest), move `MarkView.app` to Applications, and open it once so macOS can register the extension.
+
+To build and install locally instead:
 
 ```bash
 ./script/build_and_run.sh --verify
@@ -73,7 +76,7 @@ qlmanage -r
 qlmanage -r cache
 ```
 
-Packaged releases include `Uninstall MarkView.app`, which removes MarkView, unregisters its extension, clears caches/preferences, and refreshes Quick Look. Your Markdown files are not touched.
+Future DMG releases will include `Uninstall MarkView.app`, which removes MarkView, unregisters its extension, clears caches/preferences, and refreshes Quick Look. Your Markdown files are not touched.
 
 ## Troubleshooting
 
