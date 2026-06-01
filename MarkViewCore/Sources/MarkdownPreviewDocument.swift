@@ -24,7 +24,7 @@ public struct MarkdownPreviewDocument {
             result.features.hasMath ? scriptTag("katex.min.js") : "",
             result.features.hasMath ? scriptTag("auto-render.min.js") : "",
             result.features.hasMermaid ? scriptTag("mermaid.min.js") : "",
-            scriptTag("quilllook.js")
+            scriptTag("markview.js")
         ]
         .filter { !$0.isEmpty }
         .joined(separator: "\n")
@@ -39,19 +39,19 @@ public struct MarkdownPreviewDocument {
           \(styles)
         </head>
         <body>
-          <nav class="quilllook-modebar" aria-label="Preview mode">
+          <nav class="markview-modebar" aria-label="Preview mode">
             <button type="button" data-mode="preview" aria-pressed="true">Preview</button>
             <button type="button" data-mode="source" aria-pressed="false">Source</button>
           </nav>
-          <main id="quilllook-preview" class="quilllook-panel">\(result.previewBody)</main>
-          <main id="quilllook-source" class="quilllook-panel source-view" hidden>\(result.sourceBody)</main>
+          <main id="markview-preview" class="markview-panel">\(result.previewBody)</main>
+          <main id="markview-source" class="markview-panel source-view" hidden>\(result.sourceBody)</main>
           <script>
-            document.querySelectorAll(".quilllook-modebar button").forEach(function (button) {
+            document.querySelectorAll(".markview-modebar button").forEach(function (button) {
               button.addEventListener("click", function () {
                 var showingSource = button.dataset.mode === "source";
-                document.getElementById("quilllook-preview").hidden = showingSource;
-                document.getElementById("quilllook-source").hidden = !showingSource;
-                document.querySelectorAll(".quilllook-modebar button").forEach(function (item) {
+                document.getElementById("markview-preview").hidden = showingSource;
+                document.getElementById("markview-source").hidden = !showingSource;
+                document.querySelectorAll(".markview-modebar button").forEach(function (item) {
                   item.setAttribute("aria-pressed", item === button ? "true" : "false");
                 });
               });

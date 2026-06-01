@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 
 let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-let resources = root.appendingPathComponent("QuillLook/Resources", isDirectory: true)
+let resources = root.appendingPathComponent("MarkView/Resources", isDirectory: true)
 let iconset = resources.appendingPathComponent("AppIcon.iconset", isDirectory: true)
 let icns = resources.appendingPathComponent("AppIcon.icns")
 

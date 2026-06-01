@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct QuillLookApp: App {
+struct MarkViewApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

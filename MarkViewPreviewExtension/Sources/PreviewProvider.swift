@@ -1,5 +1,5 @@
 import Foundation
-import QuillLookCore
+import MarkViewCore
 import Quartz
 import UniformTypeIdentifiers
 

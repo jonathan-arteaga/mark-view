@@ -2,15 +2,15 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-APP_NAME="QuillLook"
-BUILD_ROOT="${QUILLLOOK_BUILD_ROOT:-$HOME/Library/Caches/QuillLook}"
+APP_NAME="MarkView"
+BUILD_ROOT="${MARKVIEW_BUILD_ROOT:-$HOME/Library/Caches/MarkView}"
 DERIVED_DATA="$BUILD_ROOT/PackageDerivedData"
-CONFIGURATION="${QUILLLOOK_CONFIGURATION:-Release}"
+CONFIGURATION="${MARKVIEW_CONFIGURATION:-Release}"
 PROJECT="$ROOT/$APP_NAME.xcodeproj"
 APP_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 DIST_DIR="$ROOT/dist"
-STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/quilllook-package.XXXXXX")"
-VERSION="${QUILLLOOK_VERSION:-0.1.0}"
+STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-package.XXXXXX")"
+VERSION="${MARKVIEW_VERSION:-0.1.0}"
 ZIP_PATH="$DIST_DIR/$APP_NAME-$VERSION-macOS.zip"
 LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
 
@@ -31,6 +31,17 @@ unregister_bundles_under() {
   done < <(/usr/bin/find "$path" \( -name "$APP_NAME.app" -o -name "${APP_NAME}PreviewExtension.appex" \) -print0 2>/dev/null || true)
 }
 
+adhoc_sign_for_distribution_zip() {
+  local app_path="$1"
+  local entitlements
+  entitlements="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/markview-zip-entitlements.XXXXXX.plist")"
+
+  /usr/bin/plutil -create xml1 "$entitlements"
+  /usr/libexec/PlistBuddy -c "Add :com.apple.security.cs.disable-library-validation bool true" "$entitlements"
+  codesign --force --deep --sign - --timestamp=none --entitlements "$entitlements" "$app_path" >/dev/null
+  rm -f "$entitlements"
+}
+
 if ! command -v xcodegen >/dev/null 2>&1; then
   if command -v brew >/dev/null 2>&1; then
     brew install xcodegen
@@ -46,7 +57,7 @@ export COPYFILE_DISABLE=1
 rm -rf "$DERIVED_DATA" "$DIST_DIR/$APP_NAME.app" "$ZIP_PATH"
 mkdir -p "$DIST_DIR"
 
-xattr -rc "$ROOT/QuillLookPreviewExtension/Resources" "$ROOT/QuillLook/Resources" >/dev/null 2>&1 || true
+xattr -rc "$ROOT/MarkViewPreviewExtension/Resources" "$ROOT/MarkView/Resources" >/dev/null 2>&1 || true
 xcodegen generate
 
 xcodebuild \
@@ -61,7 +72,7 @@ xcodebuild \
 /usr/bin/dot_clean -m "$STAGING_DIR/$APP_NAME.app" >/dev/null 2>&1 || true
 xattr -cr "$STAGING_DIR/$APP_NAME.app" >/dev/null 2>&1 || true
 xattr -d com.apple.FinderInfo "$STAGING_DIR/$APP_NAME.app" >/dev/null 2>&1 || true
-codesign --force --deep --sign - --timestamp=none --preserve-metadata=identifier,entitlements,flags "$STAGING_DIR/$APP_NAME.app" >/dev/null
+adhoc_sign_for_distribution_zip "$STAGING_DIR/$APP_NAME.app"
 codesign --verify --deep --strict --verbose=2 "$STAGING_DIR/$APP_NAME.app"
 
 (

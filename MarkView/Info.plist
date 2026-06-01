@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>QuillLook</string>
+	<string>MarkView</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -57,7 +57,7 @@
 			<key>UTTypeDescription</key>
 			<string>MDX document</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.jonathanarteaga.quilllook.mdx</string>
+			<string>com.jonathanarteaga.markview.mdx</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

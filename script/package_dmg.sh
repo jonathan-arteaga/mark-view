@@ -2,21 +2,21 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-APP_NAME="QuillLook"
-VERSION="${QUILLLOOK_VERSION:-0.1.0}"
-BUILD_ROOT="${QUILLLOOK_BUILD_ROOT:-$HOME/Library/Caches/QuillLook}"
+APP_NAME="MarkView"
+VERSION="${MARKVIEW_VERSION:-0.1.0}"
+BUILD_ROOT="${MARKVIEW_BUILD_ROOT:-$HOME/Library/Caches/MarkView}"
 DERIVED_DATA="$BUILD_ROOT/DmgDerivedData"
-CONFIGURATION="${QUILLLOOK_CONFIGURATION:-Release}"
+CONFIGURATION="${MARKVIEW_CONFIGURATION:-Release}"
 PROJECT="$ROOT/$APP_NAME.xcodeproj"
 APP_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 DIST_DIR="$ROOT/dist"
 FINAL_DMG="$DIST_DIR/$APP_NAME-$VERSION-macOS.dmg"
-NOTARY_PROFILE="${QUILLLOOK_NOTARY_PROFILE:-quilllook-notary}"
-STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/quilllook-dmg.XXXXXX")"
+NOTARY_PROFILE="${MARKVIEW_NOTARY_PROFILE:-markview-notary}"
+STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-dmg.XXXXXX")"
 DMG_ROOT="$STAGING_DIR/dmg-root"
 BACKGROUND_DIR="$DMG_ROOT/.background"
 BACKGROUND_PNG="$BACKGROUND_DIR/background.png"
-UNINSTALLER_APP="$DMG_ROOT/Uninstall QuillLook.app"
+UNINSTALLER_APP="$DMG_ROOT/Uninstall MarkView.app"
 RW_DMG="$STAGING_DIR/$APP_NAME-$VERSION-rw.dmg"
 VOLUME_NAME="$APP_NAME"
 LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
@@ -68,8 +68,8 @@ unregister_bundles_under() {
 }
 
 detect_developer_id() {
-  if [[ -n "${QUILLLOOK_DEVELOPER_ID:-}" ]]; then
-    echo "$QUILLLOOK_DEVELOPER_ID"
+  if [[ -n "${MARKVIEW_DEVELOPER_ID:-}" ]]; then
+    echo "$MARKVIEW_DEVELOPER_ID"
     return
   fi
 
@@ -79,8 +79,8 @@ detect_developer_id() {
 
 extract_team_id() {
   local identity="$1"
-  if [[ -n "${QUILLLOOK_DEVELOPMENT_TEAM:-}" ]]; then
-    echo "$QUILLLOOK_DEVELOPMENT_TEAM"
+  if [[ -n "${MARKVIEW_DEVELOPMENT_TEAM:-}" ]]; then
+    echo "$MARKVIEW_DEVELOPMENT_TEAM"
     return
   fi
 
@@ -100,7 +100,7 @@ preflight_developer_id() {
     echo "install it in Keychain Access, then rerun this script."
     echo
     echo "You can also override detection with:"
-    echo '  QUILLLOOK_DEVELOPER_ID="Developer ID Application: Your Name (TEAMID)" ./script/package_dmg.sh'
+    echo '  MARKVIEW_DEVELOPER_ID="Developer ID Application: Your Name (TEAMID)" ./script/package_dmg.sh'
     exit 1
   fi
 
@@ -109,7 +109,7 @@ preflight_developer_id() {
     echo "Could not determine the Apple team ID from:"
     echo "  $DEVELOPER_ID"
     echo
-    echo "Rerun with QUILLLOOK_DEVELOPMENT_TEAM=YOUR_TEAM_ID."
+    echo "Rerun with MARKVIEW_DEVELOPMENT_TEAM=YOUR_TEAM_ID."
     exit 1
   fi
 }
@@ -127,7 +127,7 @@ preflight_notary_profile() {
   echo "    --team-id YOUR_TEAM_ID \\"
   echo "    --password YOUR_APP_SPECIFIC_PASSWORD"
   echo
-  echo "Or choose another stored profile with QUILLLOOK_NOTARY_PROFILE=profile-name."
+  echo "Or choose another stored profile with MARKVIEW_NOTARY_PROFILE=profile-name."
   exit 1
 }
 
@@ -145,15 +145,15 @@ sign_bundle() {
 
 sign_app() {
   local app_path="$1"
-  local framework_path="$app_path/Contents/Frameworks/QuillLookCore.framework"
+  local framework_path="$app_path/Contents/Frameworks/MarkViewCore.framework"
   local extension_path="$app_path/Contents/PlugIns/${APP_NAME}PreviewExtension.appex"
 
   if [[ -d "$framework_path" ]]; then
     sign_bundle "$framework_path"
   fi
 
-  sign_bundle "$extension_path" "$ROOT/QuillLookPreviewExtension/QuillLookPreviewExtension.entitlements"
-  sign_bundle "$app_path" "$ROOT/QuillLook/QuillLook.entitlements"
+  sign_bundle "$extension_path" "$ROOT/MarkViewPreviewExtension/MarkViewPreviewExtension.entitlements"
+  sign_bundle "$app_path" "$ROOT/MarkView/MarkView.entitlements"
 
   codesign --verify --deep --strict --verbose=2 "$app_path"
   spctl --assess --type execute --verbose=4 "$app_path" || {
@@ -169,7 +169,7 @@ build_release_app() {
   rm -rf "$DERIVED_DATA" "$FINAL_DMG" "$DMG_ROOT"
   mkdir -p "$DIST_DIR" "$BACKGROUND_DIR"
 
-  xattr -rc "$ROOT/QuillLookPreviewExtension/Resources" "$ROOT/QuillLook/Resources" >/dev/null 2>&1 || true
+  xattr -rc "$ROOT/MarkViewPreviewExtension/Resources" "$ROOT/MarkView/Resources" >/dev/null 2>&1 || true
   xcodegen generate
 
   xcodebuild \
@@ -236,7 +236,7 @@ tell application "Finder"
     set background picture of viewOptions to file ".background:background.png"
     set position of item "$APP_NAME.app" of container window to {190, 205}
     set position of item "Applications" of container window to {570, 205}
-    set position of item "Uninstall QuillLook.app" of container window to {380, 360}
+    set position of item "Uninstall MarkView.app" of container window to {380, 360}
     close
     open
     update without registering applications

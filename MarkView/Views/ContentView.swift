@@ -9,7 +9,7 @@ struct ContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("QuillLook")
+                Text("MarkView")
                     .font(.title.weight(.semibold))
                 Text("Local Quick Look previews for Markdown, diagrams, math, code, tables, and images.")
                     .font(.callout)
@@ -75,7 +75,7 @@ struct ContentView: View {
         cleanupMessage = "Cleaning stale copies..."
 
         Task.detached {
-            let message = StaleQuillLookCleaner.clean()
+            let message = StaleMarkViewCleaner.clean()
             await MainActor.run {
                 cleanupMessage = message
                 isCleaning = false
@@ -109,21 +109,21 @@ private struct StatusRow: View {
     }
 }
 
-private enum StaleQuillLookCleaner {
+private enum StaleMarkViewCleaner {
     static func clean() -> String {
         let fileManager = FileManager.default
         let home = fileManager.homeDirectoryForCurrentUser
         let currentAppPath = Bundle.main.bundleURL.standardizedFileURL.path
-        let installedApp = home.appendingPathComponent("Applications/QuillLook.app")
+        let installedApp = home.appendingPathComponent("Applications/MarkView.app")
 
         let candidates = [
-            home.appendingPathComponent("Documents/QuillLook/dist/QuillLook.app"),
-            home.appendingPathComponent("Documents/QuillLook/build/DerivedData"),
-            home.appendingPathComponent("Library/Caches/QuillLook/TestDerivedData"),
-            home.appendingPathComponent("Library/Caches/QuillLook/PackageDerivedData"),
-            home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Debug"),
-            home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Release/QuillLook.app"),
-            home.appendingPathComponent("Library/Caches/QuillLook/DerivedData/Build/Products/Release/QuillLookPreviewExtension.appex")
+            home.appendingPathComponent("Documents/MarkView/dist/MarkView.app"),
+            home.appendingPathComponent("Documents/MarkView/build/DerivedData"),
+            home.appendingPathComponent("Library/Caches/MarkView/TestDerivedData"),
+            home.appendingPathComponent("Library/Caches/MarkView/PackageDerivedData"),
+            home.appendingPathComponent("Library/Caches/MarkView/DerivedData/Build/Products/Debug"),
+            home.appendingPathComponent("Library/Caches/MarkView/DerivedData/Build/Products/Release/MarkView.app"),
+            home.appendingPathComponent("Library/Caches/MarkView/DerivedData/Build/Products/Release/MarkViewPreviewExtension.appex")
         ]
 
         var removedCount = 0
@@ -163,8 +163,8 @@ private enum StaleQuillLookCleaner {
 
     private static func unregisterBundles(under url: URL) {
         let bundleNames: Set<String> = [
-            "QuillLook.app",
-            "QuillLookPreviewExtension.appex"
+            "MarkView.app",
+            "MarkViewPreviewExtension.appex"
         ]
         if bundleNames.contains(url.lastPathComponent) {
             unregister(url)

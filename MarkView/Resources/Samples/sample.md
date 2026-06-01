@@ -1,6 +1,6 @@
-# QuillLook Sample
+# MarkView Sample
 
-QuillLook previews **Markdown** directly in Finder with polished local rendering.
+MarkView previews **Markdown** directly in Finder with polished local rendering.
 
 - [x] Task lists
 - [ ] Local images
@@ -30,7 +30,7 @@ struct Preview {
 ```mermaid
 flowchart LR
   A[Finder] --> B[Quick Look]
-  B --> C[QuillLook]
+  B --> C[MarkView]
   C --> D[Rendered Preview]
 ```
 

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.jonathanarteaga.QuillLook.WebAssets</string>
+	<string>com.jonathanarteaga.MarkView.WebAssets</string>
 	<key>CFBundleName</key>
 	<string>WebAssets</string>
 	<key>CFBundlePackageType</key>

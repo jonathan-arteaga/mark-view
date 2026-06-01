@@ -1,4 +1,4 @@
-name: QuillLook
+name: MarkView
 options:
   bundleIdPrefix: com.jonathanarteaga
   deploymentTarget:
@@ -17,56 +17,56 @@ settings:
     Release:
       ENABLE_HARDENED_RUNTIME: YES
 targets:
-  QuillLookCore:
+  MarkViewCore:
     type: framework
     platform: macOS
     sources:
-      - path: QuillLookCore/Sources
+      - path: MarkViewCore/Sources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.QuillLookCore
+        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.MarkViewCore
         GENERATE_INFOPLIST_FILE: YES
       configs:
         Release:
           ENABLE_HARDENED_RUNTIME: YES
 
-  QuillLookPreviewExtension:
+  MarkViewPreviewExtension:
     type: app-extension
     platform: macOS
     sources:
-      - path: QuillLookPreviewExtension/Sources
-      - path: QuillLookPreviewExtension/Resources
+      - path: MarkViewPreviewExtension/Sources
+      - path: MarkViewPreviewExtension/Resources
     dependencies:
-      - target: QuillLookCore
+      - target: MarkViewCore
       - sdk: Quartz.framework
       - sdk: UniformTypeIdentifiers.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.QuillLook.PreviewExtension
-        INFOPLIST_FILE: QuillLookPreviewExtension/Info.plist
-        CODE_SIGN_ENTITLEMENTS: QuillLookPreviewExtension/QuillLookPreviewExtension.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.MarkView.PreviewExtension
+        INFOPLIST_FILE: MarkViewPreviewExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MarkViewPreviewExtension/MarkViewPreviewExtension.entitlements
         GENERATE_INFOPLIST_FILE: NO
         SKIP_INSTALL: YES
       configs:
         Release:
           ENABLE_HARDENED_RUNTIME: YES
 
-  QuillLook:
+  MarkView:
     type: application
     platform: macOS
     sources:
-      - path: QuillLook/App
-      - path: QuillLook/Views
-      - path: QuillLook/Resources
+      - path: MarkView/App
+      - path: MarkView/Views
+      - path: MarkView/Resources
     dependencies:
-      - target: QuillLookCore
-      - target: QuillLookPreviewExtension
+      - target: MarkViewCore
+      - target: MarkViewPreviewExtension
         embed: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.QuillLook
-        INFOPLIST_FILE: QuillLook/Info.plist
-        CODE_SIGN_ENTITLEMENTS: QuillLook/QuillLook.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.MarkView
+        INFOPLIST_FILE: MarkView/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MarkView/MarkView.entitlements
         GENERATE_INFOPLIST_FILE: NO
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
@@ -74,24 +74,24 @@ targets:
         Release:
           ENABLE_HARDENED_RUNTIME: YES
 
-  QuillLookTests:
+  MarkViewTests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - path: QuillLookTests
+      - path: MarkViewTests
     dependencies:
-      - target: QuillLookCore
+      - target: MarkViewCore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.QuillLookTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.jonathanarteaga.MarkViewTests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
-  QuillLook:
+  MarkView:
     build:
       targets:
-        QuillLook: all
-        QuillLookTests: [test]
+        MarkView: all
+        MarkViewTests: [test]
     test:
       targets:
-        - QuillLookTests
+        - MarkViewTests
       gatherCoverageData: false

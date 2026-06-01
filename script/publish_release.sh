@@ -2,10 +2,10 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-APP_NAME="QuillLook"
-VERSION="${QUILLLOOK_VERSION:-0.1.0}"
-TAG="${QUILLLOOK_RELEASE_TAG:-v$VERSION}"
-REPO="${QUILLLOOK_GITHUB_REPO:-jonathan-arteaga/quill-look}"
+APP_NAME="MarkView"
+VERSION="${MARKVIEW_VERSION:-0.1.0}"
+TAG="${MARKVIEW_RELEASE_TAG:-v$VERSION}"
+REPO="${MARKVIEW_GITHUB_REPO:-jonathan-arteaga/mark-view}"
 DMG_PATH="$ROOT/dist/$APP_NAME-$VERSION-macOS.dmg"
 ZIP_ASSET="$APP_NAME-$VERSION-macOS.zip"
 

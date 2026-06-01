@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>QuillLook Preview</string>
+	<string>MarkView Preview</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>QuillLookPreviewExtension</string>
+	<string>MarkViewPreviewExtension</string>
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
@@ -29,7 +29,7 @@
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>net.daringfireball.markdown</string>
-				<string>com.jonathanarteaga.quilllook.mdx</string>
+				<string>com.jonathanarteaga.markview.mdx</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
@@ -72,7 +72,7 @@
 			<key>UTTypeDescription</key>
 			<string>MDX document</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.jonathanarteaga.quilllook.mdx</string>
+			<string>com.jonathanarteaga.markview.mdx</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

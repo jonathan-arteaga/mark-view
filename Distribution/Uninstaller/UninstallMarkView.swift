@@ -2,7 +2,7 @@ import AppKit
 import Foundation
 
 @main
-struct UninstallQuillLook {
+struct UninstallMarkView {
     static func main() {
         let app = NSApplication.shared
         app.setActivationPolicy(.regular)
@@ -30,7 +30,7 @@ private final class Uninstaller {
             return
         }
 
-        _ = runProcess("/usr/bin/pkill", ["-x", "QuillLook"])
+        _ = runProcess("/usr/bin/pkill", ["-x", "MarkView"])
         unregisterDiscoveredQuickLookProviders()
 
         for url in removableURLs() {
@@ -43,8 +43,8 @@ private final class Uninstaller {
 
     private func confirmUninstall() -> Bool {
         let alert = NSAlert()
-        alert.messageText = "Uninstall QuillLook?"
-        alert.informativeText = "This removes QuillLook from Applications, unregisters its Quick Look extension, clears QuillLook caches and preferences, and refreshes Quick Look. Your Markdown files are not touched."
+        alert.messageText = "Uninstall MarkView?"
+        alert.informativeText = "This removes MarkView from Applications, unregisters its Quick Look extension, clears MarkView caches and preferences, and refreshes Quick Look. Your Markdown files are not touched."
         alert.alertStyle = .warning
         alert.addButton(withTitle: "Uninstall")
         alert.addButton(withTitle: "Cancel")
@@ -53,13 +53,13 @@ private final class Uninstaller {
 
     private func showResult() {
         let alert = NSAlert()
-        alert.messageText = failedItems.isEmpty ? "QuillLook was uninstalled." : "QuillLook was mostly uninstalled."
+        alert.messageText = failedItems.isEmpty ? "MarkView was uninstalled." : "MarkView was mostly uninstalled."
 
         if failedItems.isEmpty {
             let count = removedItems.count
             alert.informativeText = count == 0
-                ? "No installed QuillLook files were found. Quick Look caches were refreshed."
-                : "Removed \(count) QuillLook item\(count == 1 ? "" : "s") and refreshed Quick Look."
+                ? "No installed MarkView files were found. Quick Look caches were refreshed."
+                : "Removed \(count) MarkView item\(count == 1 ? "" : "s") and refreshed Quick Look."
             alert.alertStyle = .informational
         } else {
             alert.informativeText = "Some items could not be removed:\n\n" + failedItems.prefix(4).joined(separator: "\n")
@@ -72,12 +72,12 @@ private final class Uninstaller {
 
     private func removableURLs() -> [URL] {
         [
-            URL(fileURLWithPath: "/Applications/QuillLook.app"),
-            home.appendingPathComponent("Applications/QuillLook.app"),
-            home.appendingPathComponent("Library/Application Support/QuillLook"),
-            home.appendingPathComponent("Library/Caches/QuillLook"),
-            home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.QuillLook.plist"),
-            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.QuillLook.savedState")
+            URL(fileURLWithPath: "/Applications/MarkView.app"),
+            home.appendingPathComponent("Applications/MarkView.app"),
+            home.appendingPathComponent("Library/Application Support/MarkView"),
+            home.appendingPathComponent("Library/Caches/MarkView"),
+            home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.MarkView.plist"),
+            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.MarkView.savedState")
         ]
     }
 
@@ -110,7 +110,7 @@ private final class Uninstaller {
 
     private func canRequestPrivilegedRemoval(for url: URL) -> Bool {
         let path = url.standardizedFileURL.path
-        return path == "/Applications/QuillLook.app"
+        return path == "/Applications/MarkView.app"
     }
 
     private func removeWithAdministratorPrompt(_ url: URL) -> Bool {
@@ -131,7 +131,7 @@ private final class Uninstaller {
             }
 
             let path = String(trimmed.dropFirst("Path = ".count))
-            if path.contains("QuillLook") {
+            if path.contains("MarkView") {
                 unregister(URL(fileURLWithPath: path))
             }
         }
@@ -139,8 +139,8 @@ private final class Uninstaller {
 
     private func unregisterBundles(under url: URL) {
         let bundleNames: Set<String> = [
-            "QuillLook.app",
-            "QuillLookPreviewExtension.appex"
+            "MarkView.app",
+            "MarkViewPreviewExtension.appex"
         ]
 
         if bundleNames.contains(url.lastPathComponent) {

@@ -50,7 +50,7 @@ let helperAttributes: [NSAttributedString.Key: Any] = [
     }()
 ]
 
-"Install QuillLook".draw(
+"Install MarkView".draw(
     in: NSRect(x: 0, y: 414, width: canvasSize.width, height: 34),
     withAttributes: titleAttributes
 )
@@ -71,8 +71,8 @@ NSColor.separatorColor.withAlphaComponent(0.85).setStroke()
 arrow.stroke()
 
 let steps = [
-    ("1", "Drag QuillLook to Applications"),
-    ("2", "Open QuillLook once"),
+    ("1", "Drag MarkView to Applications"),
+    ("2", "Open MarkView once"),
     ("3", "Select a Markdown file and press Space")
 ]
 
@@ -97,7 +97,7 @@ for (index, step) in steps.enumerated() {
     step.1.draw(in: NSRect(x: 204, y: y, width: 400, height: 22), withAttributes: stepAttributes)
 }
 
-"Need to remove it later? Open Uninstall QuillLook from this disk image.".draw(
+"Need to remove it later? Open Uninstall MarkView from this disk image.".draw(
     in: NSRect(x: 0, y: 28, width: canvasSize.width, height: 18),
     withAttributes: helperAttributes
 )

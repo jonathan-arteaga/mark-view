@@ -1,35 +1,34 @@
 <p align="center">
-  <img src="docs/assets/quilllook-icon.png" width="112" alt="QuillLook app icon">
+  <img src="docs/assets/markview-icon.png" width="112" alt="MarkView app icon">
 </p>
 
-<h1 align="center">QuillLook</h1>
+<h1 align="center">MarkView</h1>
 
 <p align="center">
   <strong>Preview Markdown in Finder with Space.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/jonathan-arteaga/quill-look/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/jonathan-arteaga/quill-look?label=release&color=111111"></a>
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
   <img alt="Built with Swift" src="https://img.shields.io/badge/Swift-111111?logo=swift&logoColor=white">
-  <img alt="Notarized Developer ID" src="https://img.shields.io/badge/Developer%20ID-notarized-111111">
+  <img alt="Quick Look extension" src="https://img.shields.io/badge/Quick%20Look-extension-111111">
 </p>
 
 <p align="center">
-  <a href="https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg"><strong>Download</strong></a>
+  <a href="#install"><strong>Install</strong></a>
   ·
   <a href="#features">Features</a>
   ·
-  <a href="#install">Install</a>
+  <a href="#build-from-source">Build</a>
   ·
   <a href="#troubleshooting">Troubleshooting</a>
 </p>
 
-![QuillLook rendering Markdown in a Quick Look preview](docs/assets/quilllook-preview.png)
+![MarkView rendering Markdown in a Quick Look preview](docs/assets/markview-preview.png)
 
-QuillLook is a native macOS Quick Look extension for readable Markdown previews in Finder. No editor, no web app, no network request: select a file, press Space, and read.
+MarkView is a native macOS Quick Look extension for readable Markdown previews in Finder. No editor, no web app, no network request: select a file, press Space, and read.
 
-## Why QuillLook
+## Why MarkView
 
 - Read Markdown without opening an editor.
 - Preview docs, notes, READMEs, and MDX files from Finder.
@@ -48,37 +47,42 @@ QuillLook is a native macOS Quick Look extension for readable Markdown previews 
 
 ## Install
 
-1. Download [QuillLook 0.1.0 for macOS](https://github.com/jonathan-arteaga/quill-look/releases/download/v0.1.0/QuillLook-0.1.0-macOS.dmg).
-2. Open the guided DMG.
-3. Drag `QuillLook.app` into Applications.
-4. Open QuillLook once so macOS can register the extension.
-5. Select a Markdown file in Finder and press Space.
+Public MarkView downloads will start with the first MarkView release. For now, build and install locally:
 
-If prompted, allow QuillLook in System Settings. After that, use it directly from Finder.
+```bash
+./script/build_and_run.sh --verify
+```
 
-The DMG is signed with Developer ID, notarized by Apple, and stapled for public distribution.
+Then select a Markdown file in Finder and press Space.
+
+If prompted, allow MarkView in System Settings. After that, use it directly from Finder.
 
 > [!NOTE]
-> QuillLook handles `md`, `markdown`, `mdown`, `mkd`, `mkdn`, and `mdx` files.
+> MarkView handles `md`, `markdown`, `mdown`, `mkd`, `mkdn`, and `mdx` files.
 
 ## Privacy
 
-Files stay on your Mac. QuillLook does not upload content, call a web service, or require an account. Bundled assets load from the app, and web links open outside the preview.
+Files stay on your Mac. MarkView does not upload content, call a web service, or require an account. Bundled assets load from the app, and web links open outside the preview.
 
-## Remove QuillLook
+## Remove MarkView
 
-Open the DMG and launch `Uninstall QuillLook.app`.
+Remove `MarkView.app` from Applications, then refresh Quick Look:
 
-The uninstaller confirms first, removes QuillLook, unregisters the extension, clears caches/preferences, and refreshes Quick Look. If needed, macOS may ask for an administrator password. Your Markdown files are not touched.
+```bash
+qlmanage -r
+qlmanage -r cache
+```
+
+Packaged releases include `Uninstall MarkView.app`, which removes MarkView, unregisters its extension, clears caches/preferences, and refreshes Quick Look. Your Markdown files are not touched.
 
 ## Troubleshooting
 
 <details>
-<summary>QuillLook does not show the preview I expected</summary>
+<summary>MarkView does not show the preview I expected</summary>
 
-### QuillLook does not appear in Quick Look
+### MarkView does not appear in Quick Look
 
-Open QuillLook once from Applications, then try Finder again. If prompted, enable the extension in System Settings.
+Open MarkView once from Applications, then try Finder again. If prompted, enable the extension in System Settings.
 
 ### The preview still looks stale after editing
 
@@ -88,9 +92,9 @@ Finder sometimes caches previews. Select another file, return to the Markdown fi
 qlmanage -r cache
 ```
 
-### I see duplicate QuillLook entries
+### I see duplicate MarkView entries
 
-This usually means macOS found old development builds. For normal installs, run `Uninstall QuillLook.app` from the DMG, then install the current DMG again.
+This usually means macOS found old development builds. For packaged installs, run `Uninstall MarkView.app` from the DMG, then install the current DMG again.
 
 Developers can clean local build registrations from the repo:
 
@@ -100,9 +104,9 @@ Developers can clean local build registrations from the repo:
 
 ### Why do I need to open the app once?
 
-QuillLook is a normal Mac app containing a Quick Look extension. Opening it once lets macOS discover that extension.
+MarkView is a normal Mac app containing a Quick Look extension. Opening it once lets macOS discover that extension.
 
-### Where does QuillLook show up?
+### Where does MarkView show up?
 
 In Finder. Select a supported Markdown file and press Space. The app window is only for onboarding, samples, and cleanup.
 
@@ -113,7 +117,7 @@ In Finder. Select a supported Markdown file and press Space. The app window is o
 <details>
 <summary>Build from source, package the DMG, and publish releases</summary>
 
-QuillLook uses XcodeGen to generate the Xcode project.
+MarkView uses XcodeGen to generate the Xcode project.
 
 Build, install locally, refresh Quick Look, and launch the app:
 
@@ -130,13 +134,13 @@ Create the public signed and notarized DMG:
 The DMG is written to:
 
 ```text
-dist/QuillLook-0.1.0-macOS.dmg
+dist/MarkView-0.1.0-macOS.dmg
 ```
 
-Public packaging requires a Developer ID Application certificate and a stored notary profile named `quilllook-notary`.
+Public packaging requires a Developer ID Application certificate and a stored notary profile named `markview-notary`.
 
 ```bash
-xcrun notarytool store-credentials quilllook-notary \
+xcrun notarytool store-credentials markview-notary \
   --apple-id YOUR_APPLE_ID \
   --team-id YOUR_TEAM_ID \
   --password YOUR_APP_SPECIFIC_PASSWORD
@@ -158,4 +162,4 @@ For local testing only, you can also create an ad-hoc signed zip:
 
 ## Status
 
-QuillLook is early but usable. The current focus is a fast, minimal Finder preview before preferences, an updater, or App Store polish.
+MarkView is early but usable. The current focus is a fast, minimal Finder preview before preferences, an updater, or App Store polish.

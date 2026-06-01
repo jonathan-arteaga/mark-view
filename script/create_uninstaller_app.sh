@@ -9,8 +9,8 @@ fi
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTPUT_APP="$1"
 TEMPLATE_DIR="$ROOT/Distribution/Uninstaller"
-EXECUTABLE_NAME="Uninstall QuillLook"
-BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/quilllook-uninstaller.XXXXXX")"
+EXECUTABLE_NAME="Uninstall MarkView"
+BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-uninstaller.XXXXXX")"
 
 cleanup() {
   rm -rf "$BUILD_DIR"
@@ -25,7 +25,7 @@ rm -rf "$OUTPUT_APP"
 mkdir -p "$MACOS_DIR" "$RESOURCES_DIR"
 
 /usr/bin/ditto "$TEMPLATE_DIR/Info.plist" "$OUTPUT_APP/Contents/Info.plist"
-/usr/bin/ditto "$ROOT/QuillLook/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
+/usr/bin/ditto "$ROOT/MarkView/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
 
 for arch in arm64 x86_64; do
   xcrun swiftc \
@@ -33,7 +33,7 @@ for arch in arm64 x86_64; do
     -parse-as-library \
     -target "$arch-apple-macos14.0" \
     -sdk "$SDKROOT" \
-    "$TEMPLATE_DIR/UninstallQuillLook.swift" \
+    "$TEMPLATE_DIR/UninstallMarkView.swift" \
     -o "$BUILD_DIR/$arch"
 done
 

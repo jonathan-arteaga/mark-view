@@ -1,7 +1,7 @@
 import XCTest
-@testable import QuillLookCore
+@testable import MarkViewCore
 
-final class QuillLookTests: XCTestCase {
+final class MarkViewTests: XCTestCase {
     func testRendersBasicMarkdownFragments() {
         let result = MarkdownHTMLRenderer().render(markdown: """
         # Title
@@ -95,7 +95,7 @@ final class QuillLookTests: XCTestCase {
         }.html()
 
         XCTAssertEqual(result.features, MarkdownRenderFeatures())
-        XCTAssertEqual(Set(requestedAssets), ["styles.css", "quilllook.js"])
+        XCTAssertEqual(Set(requestedAssets), ["styles.css", "markview.js"])
     }
 
     func testCodeMarkdownRequestsHighlightAssetsOnly() {
