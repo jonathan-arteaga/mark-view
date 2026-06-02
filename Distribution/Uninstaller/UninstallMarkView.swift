@@ -76,8 +76,8 @@ private final class Uninstaller {
             home.appendingPathComponent("Applications/MarkView.app"),
             home.appendingPathComponent("Library/Application Support/MarkView"),
             home.appendingPathComponent("Library/Caches/MarkView"),
-            home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.MarkView.plist"),
-            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.MarkView.savedState")
+            home.appendingPathComponent("Library/Preferences/com.jonathanarteaga.markview.plist"),
+            home.appendingPathComponent("Library/Saved Application State/com.jonathanarteaga.markview.savedState")
         ]
     }
 
