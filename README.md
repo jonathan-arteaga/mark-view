@@ -1,44 +1,30 @@
+#
+
 <p align="center">
-  <img src="docs/assets/markview-icon.png" width="96" alt="MarkView logo">
+  <img src="docs/assets/markview-icon.png" alt="MarkView app icon" width="120">
 </p>
 
 <h1 align="center">MarkView</h1>
 
-<p align="center">
-  <strong>Preview Markdown in Finder with Space.</strong>
-</p>
+#### Preview Markdown in Finder with Space.
 
-<p align="center">
-  <img alt="macOS 14+" src="https://img.shields.io/badge/macOS%2014%2B-111111">
-  <img alt="Swift" src="https://img.shields.io/badge/Swift-111111">
-  <img alt="Quick Look Extension" src="https://img.shields.io/badge/Quick%20Look%20Extension-111111">
-</p>
+![macOS 14+](https://img.shields.io/badge/macOS%2014%2B-111111) ![Swift](https://img.shields.io/badge/Swift-111111) ![Quick Look Extension](https://img.shields.io/badge/Quick%20Look%20Extension-111111)
 
-<p align="center">
-  <a href="#key-features"><strong>Key Features</strong></a>
-  ·
-  <a href="#how-to-use">How To Use</a>
-  ·
-  <a href="#download">Download</a>
-  ·
-  <a href="#credits">Credits</a>
-  ·
-  <a href="#related">Related</a>
-  ·
-  <a href="#license">License</a>
-</p>
+[Key Features](#key-features) &bull; [How To Use](#how-to-use) &bull; [Download](#download) &bull; [Credits](#credits) &bull; [Related](#related) &bull; [Support](#support) &bull; [You may also like](#you-may-also-like) &bull; [License](#license)
 
-![MarkView screenshot](docs/assets/markview-preview.png)
+![screenshot](docs/assets/markview-preview.png)
 
 ## Key Features
 
-- **Finder previews** - Preview Markdown directly from Finder with Space.
-- **Readable rendering** - Supports headings, links, lists, blockquotes, tables, task lists, and inline formatting.
-- **Developer docs** - Highlights fenced code blocks and keeps README files easy to scan.
-- **Rich Markdown** - Renders Mermaid diagrams, KaTeX math, and readable local images when present.
-- **Local by design** - Files stay on your Mac and do not require an account or network request.
+- Finder previews - Preview Markdown directly from Finder with Space.
+- Readable rendering - Supports headings, links, lists, blockquotes, tables, task lists, and inline formatting.
+- Developer docs - Highlights fenced code blocks and keeps README files easy to scan.
+- Rich Markdown - Renders Mermaid diagrams, KaTeX math, and readable local images when present.
+- Local by design - Files stay on your Mac and do not require an account or network request.
 
 ## How To Use
+
+To build, install, refresh Quick Look, and verify locally:
 
 ```bash
 ./script/build_and_run.sh --verify
@@ -50,9 +36,19 @@ Download the latest MarkView DMG from [Releases](https://github.com/jonathan-art
 
 ## Credits
 
-See `THIRD_PARTY_NOTICES.md` for bundled third-party notices. MarkView is maintained by Jonathan Arteaga.
+- Swift and Quick Look for the native app and preview extension.
+- `THIRD_PARTY_NOTICES.md` for bundled third-party notices.
 
 ## Related
+
+- [CaptureCue](https://github.com/jonathan-arteaga/capture-cue) - macOS capture studio.
+- [MouseKit](https://github.com/jonathan-arteaga/mouse-kit) - Mouse setup and DPI workflow utility.
+
+## Support
+
+Open an issue with your macOS version, file extension, and a small Markdown sample when possible.
+
+## You may also like
 
 - [CaptureCue](https://github.com/jonathan-arteaga/capture-cue)
 - [MouseKit](https://github.com/jonathan-arteaga/mouse-kit)
@@ -60,3 +56,7 @@ See `THIRD_PARTY_NOTICES.md` for bundled third-party notices. MarkView is mainta
 ## License
 
 No license file is currently included.
+
+---
+
+> [jonathanarteaga.com](https://jonathanarteaga.com) &nbsp;&middot;&nbsp; GitHub [@jonathan-arteaga](https://github.com/jonathan-arteaga)
