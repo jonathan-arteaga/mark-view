@@ -12,6 +12,8 @@ TEMPLATE_DIR="$ROOT/Distribution/Uninstaller"
 EXECUTABLE_NAME="Uninstall MarkView"
 BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-uninstaller.XXXXXX")"
 
+source "$ROOT/script/project_version.sh"
+
 cleanup() {
   rm -rf "$BUILD_DIR"
 }
@@ -25,6 +27,8 @@ rm -rf "$OUTPUT_APP"
 mkdir -p "$MACOS_DIR" "$RESOURCES_DIR"
 
 /usr/bin/ditto "$TEMPLATE_DIR/Info.plist" "$OUTPUT_APP/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MARKVIEW_VERSION" "$OUTPUT_APP/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $MARKVIEW_BUILD_NUMBER" "$OUTPUT_APP/Contents/Info.plist"
 /usr/bin/ditto "$ROOT/MarkView/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
 
 for arch in arm64 x86_64; do

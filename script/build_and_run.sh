@@ -110,12 +110,8 @@ if [[ "$CLEAN_ONLY" == true ]]; then
 fi
 
 if ! command -v xcodegen >/dev/null 2>&1; then
-  if command -v brew >/dev/null 2>&1; then
-    brew install xcodegen
-  else
-    echo "xcodegen is required. Install it with Homebrew, then rerun this script."
-    exit 1
-  fi
+  echo "xcodegen is required. Install it with Homebrew, then rerun this script."
+  exit 1
 fi
 
 cd "$ROOT"

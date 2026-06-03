@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_NAME="MarkView"
+source "$ROOT/script/project_version.sh"
 BUILD_ROOT="${MARKVIEW_BUILD_ROOT:-$HOME/Library/Caches/MarkView}"
 DERIVED_DATA="$BUILD_ROOT/PackageDerivedData"
 CONFIGURATION="${MARKVIEW_CONFIGURATION:-Release}"
@@ -10,7 +11,7 @@ PROJECT="$ROOT/$APP_NAME.xcodeproj"
 APP_PRODUCT="$DERIVED_DATA/Build/Products/$CONFIGURATION/$APP_NAME.app"
 DIST_DIR="$ROOT/dist"
 STAGING_DIR="$(mktemp -d "${TMPDIR:-/tmp}/markview-package.XXXXXX")"
-VERSION="${MARKVIEW_VERSION:-0.1.1}"
+VERSION="$MARKVIEW_VERSION"
 ZIP_PATH="$DIST_DIR/$APP_NAME-$VERSION-macOS.zip"
 LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
 
@@ -43,12 +44,8 @@ adhoc_sign_for_distribution_zip() {
 }
 
 if ! command -v xcodegen >/dev/null 2>&1; then
-  if command -v brew >/dev/null 2>&1; then
-    brew install xcodegen
-  else
-    echo "xcodegen is required. Install it with Homebrew, then rerun this script."
-    exit 1
-  fi
+  echo "xcodegen is required. Install it with Homebrew, then rerun this script."
+  exit 1
 fi
 
 cd "$ROOT"

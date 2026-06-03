@@ -9,19 +9,17 @@ public struct LocalImageResolver {
             return nil
         }
 
-        if trimmed.hasPrefix("http://") || trimmed.hasPrefix("https://") || trimmed.hasPrefix("data:") {
-            return trimmed
-        }
-
-        guard let markdownFileURL else {
+        guard !trimmed.hasPrefix("/"), URLComponents(string: trimmed)?.scheme == nil, let markdownFileURL else {
             return nil
         }
 
-        let candidate: URL
-        if trimmed.hasPrefix("file://"), let fileURL = URL(string: trimmed) {
-            candidate = fileURL
-        } else {
-            candidate = markdownFileURL.deletingLastPathComponent().appendingPathComponent(trimmed.removingPercentEncoding ?? trimmed)
+        let baseDirectory = markdownFileURL.deletingLastPathComponent().standardizedFileURL
+        let candidate = baseDirectory
+            .appendingPathComponent(trimmed.removingPercentEncoding ?? trimmed)
+            .standardizedFileURL
+
+        guard isDescendant(candidate, of: baseDirectory) else {
+            return nil
         }
 
         guard let data = try? Data(contentsOf: candidate), let mimeType = mimeType(for: candidate) else {
@@ -47,5 +45,9 @@ public struct LocalImageResolver {
             return nil
         }
     }
-}
 
+    private func isDescendant(_ url: URL, of directory: URL) -> Bool {
+        let directoryPath = directory.path.hasSuffix("/") ? directory.path : "\(directory.path)/"
+        return url.path.hasPrefix(directoryPath)
+    }
+}

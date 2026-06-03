@@ -63,6 +63,7 @@ final class MarkViewTests: XCTestCase {
     func testLocalImageEmbedsReadableDataURL() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
         let markdownURL = directory.appendingPathComponent("doc.md")
         let imageURL = directory.appendingPathComponent("tiny.png")
         try Data([0x89, 0x50, 0x4E, 0x47]).write(to: imageURL)
@@ -79,6 +80,51 @@ final class MarkViewTests: XCTestCase {
 
         XCTAssertTrue(result.previewHTML.contains("Missing image: missing.png"))
         XCTAssertTrue(result.features.hasLocalImages)
+    }
+
+    func testRemoteImageIsNotEmbedded() {
+        let markdownURL = FileManager.default.temporaryDirectory.appendingPathComponent("doc.md")
+        let result = MarkdownHTMLRenderer().render(markdown: "![remote](https://example.com/image.png)", fileURL: markdownURL)
+
+        XCTAssertFalse(result.previewHTML.contains(#"<img src="https://example.com/image.png""#))
+        XCTAssertFalse(result.features.hasLocalImages)
+        XCTAssertTrue(result.previewHTML.contains("Missing image: https://example.com/image.png"))
+    }
+
+    func testAbsoluteFileImageIsNotEmbedded() {
+        let markdownURL = FileManager.default.temporaryDirectory.appendingPathComponent("doc.md")
+        let result = MarkdownHTMLRenderer().render(markdown: "![secret](file:///tmp/secret.png)", fileURL: markdownURL)
+
+        XCTAssertFalse(result.previewHTML.contains("data:image/png;base64,"))
+        XCTAssertFalse(result.features.hasLocalImages)
+        XCTAssertTrue(result.previewHTML.contains("Missing image: file:///tmp/secret.png"))
+    }
+
+    func testParentDirectoryImageIsNotEmbedded() {
+        let markdownURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("docs", isDirectory: true)
+            .appendingPathComponent("doc.md")
+        let result = MarkdownHTMLRenderer().render(markdown: "![outside](../outside.png)", fileURL: markdownURL)
+
+        XCTAssertFalse(result.previewHTML.contains("data:image/png;base64,"))
+        XCTAssertTrue(result.features.hasLocalImages)
+        XCTAssertTrue(result.previewHTML.contains("Missing image: ../outside.png"))
+    }
+
+    func testUnsafeLinksRenderAsText() {
+        let result = MarkdownHTMLRenderer().render(markdown: "[bad](javascript:alert) and [file](file:///tmp/doc.md)")
+
+        XCTAssertFalse(result.previewHTML.contains("javascript:"))
+        XCTAssertFalse(result.previewHTML.contains("file:///tmp/doc.md"))
+        XCTAssertFalse(result.previewHTML.contains("<a href="))
+        XCTAssertTrue(result.previewHTML.contains("<p>bad and file</p>"))
+    }
+
+    func testWebAndAnchorLinksArePreserved() {
+        let result = MarkdownHTMLRenderer().render(markdown: "[site](https://example.com?a=1&b=2) and [section](#intro)")
+
+        XCTAssertTrue(result.previewHTML.contains(#"<a href="https://example.com?a=1&amp;b=2" target="_blank" rel="noopener noreferrer">site</a>"#))
+        XCTAssertTrue(result.previewHTML.contains(##"<a href="#intro" target="_blank" rel="noopener noreferrer">section</a>"##))
     }
 
     func testPlainMarkdownDoesNotRequestHeavyAssets() {

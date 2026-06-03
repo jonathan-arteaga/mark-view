@@ -212,7 +212,7 @@ public struct MarkdownHTMLRenderer {
     }
 
     private func replaceImages(in escapedText: String, imageStore: InlineImageStore, fileURL: URL?, features: inout MarkdownRenderFeatures) -> String {
-        replaceMatches(pattern: #"%%MARKDOWNQL_IMAGE_(\d+)%%"#, in: escapedText) { match in
+        replaceMatches(pattern: #"%%MARKVIEW_IMAGE_(\d+)%%"#, in: escapedText) { match in
             guard let id = Int(match[1]), let image = imageStore.image(for: id) else {
                 return "<span class=\"missing-image\">Image unavailable</span>"
             }
@@ -228,11 +228,14 @@ public struct MarkdownHTMLRenderer {
     }
 
     private func replaceLinks(in escapedText: String) -> String {
-        escapedText.replacingOccurrences(
-            of: #"\[([^\]]+)\]\(([^)]+)\)"#,
-            with: #"<a href="$2">$1</a>"#,
-            options: .regularExpression
-        )
+        replaceMatches(pattern: #"\[([^\]]+)\]\(([^)]+)\)"#, in: escapedText) { match in
+            let label = match[1]
+            let destination = match[2]
+            guard let href = safeHref(destination) else {
+                return label
+            }
+            return #"<a href="\#(href)" target="_blank" rel="noopener noreferrer">\#(label)</a>"#
+        }
     }
 
     private func protectInlineCode(in text: String, placeholders: inout PlaceholderStore) -> String {
@@ -264,7 +267,7 @@ public struct MarkdownHTMLRenderer {
                 continue
             }
             let id = store.insert(InlineImage(alt: String(result[altRange]), destination: String(result[destinationRange])))
-            result.replaceSubrange(fullRange, with: "%%MARKDOWNQL_IMAGE_\(id)%%")
+            result.replaceSubrange(fullRange, with: "%%MARKVIEW_IMAGE_\(id)%%")
         }
         return result
     }
@@ -293,9 +296,29 @@ private func containsMathDelimiters(in source: String) -> Bool {
 private func isLocalImageDestination(_ destination: String) -> Bool {
     let trimmed = destination.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     return !trimmed.isEmpty &&
+        URLComponents(string: trimmed)?.scheme == nil &&
         !trimmed.hasPrefix("http://") &&
         !trimmed.hasPrefix("https://") &&
         !trimmed.hasPrefix("data:")
+}
+
+private func safeHref(_ destination: String) -> String? {
+    let trimmed = destination.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty else {
+        return nil
+    }
+    if trimmed.hasPrefix("#") {
+        return trimmed
+    }
+    guard let scheme = URLComponents(string: trimmed)?.scheme?.lowercased() else {
+        return nil
+    }
+    switch scheme {
+    case "http", "https", "mailto":
+        return trimmed
+    default:
+        return nil
+    }
 }
 
 private struct Fence {
@@ -329,7 +352,7 @@ private struct PlaceholderStore {
 
     mutating func store(_ html: String) -> String {
         index += 1
-        let token = "%%MARKDOWNQL_PLACEHOLDER_\(index)%%"
+        let token = "%%MARKVIEW_PLACEHOLDER_\(index)%%"
         values[token] = html
         return token
     }

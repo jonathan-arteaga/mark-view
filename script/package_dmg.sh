@@ -3,7 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP_NAME="MarkView"
-VERSION="${MARKVIEW_VERSION:-0.1.1}"
+source "$ROOT/script/project_version.sh"
+VERSION="$MARKVIEW_VERSION"
 BUILD_ROOT="${MARKVIEW_BUILD_ROOT:-$HOME/Library/Caches/MarkView}"
 DERIVED_DATA="$BUILD_ROOT/DmgDerivedData"
 CONFIGURATION="${MARKVIEW_CONFIGURATION:-Release}"
@@ -43,11 +44,6 @@ require_tool() {
 
 ensure_xcodegen() {
   if command -v xcodegen >/dev/null 2>&1; then
-    return
-  fi
-
-  if command -v brew >/dev/null 2>&1; then
-    brew install xcodegen
     return
   fi
 
