@@ -7,3 +7,7 @@ dist/
 *.xcuserdata/
 *.xcscmblueprint
 node_modules/
+
+# Local Codex context and GPT knowledge exports.
+.codex/context/
+.codex/gpt-knowledge/
